@@ -21,15 +21,10 @@ services:
       replicas: 2
 
   spark-job:
-    image: bitnami/spark:latest
+    build: .
     depends_on:
       - spark-master
     environment:
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - DATA_CSV=/app/data/data.csv
     volumes:
-      - ./jobs:/app/jobs
-      - ./data:/app/data
       - ./out:/app/out
-    working_dir: /app/jobs
-    command: [ "spark-submit", "--master", "spark://spark-master:7077", "process.py" ]
