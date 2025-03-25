@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg, to_date
-
+import os
 
 # Яка «середня» тривалість поїздки на день?
 def avg_trip_duration(df):
@@ -44,10 +44,14 @@ def avg_trip_duration_per_gender(df):
     return result # in minutes
 
 if __name__ == "__main__":
+    master_url = os.getenv("SPARK_MASTER_URL")
+    data_csv = os.getenv("DATA_CSV")
+    spark = SparkSession.builder\
+        .appName("process")\
+        .master(master_url)\
+        .getOrCreate()
 
-    spark = SparkSession.builder.appName("process").getOrCreate()
-
-    df = spark.read.csv("data.csv", header=True, inferSchema=True)
+    df = spark.read.csv(data_csv, header=True, inferSchema=True)
     df.printSchema()
 
     print("Яка «середня» тривалість поїздки на день?")
