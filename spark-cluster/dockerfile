@@ -1,0 +1,9 @@
+FROM bitnami/spark:latest
+
+COPY ./data/data.csv /app/data/data.csv
+COPY ./jobs/process.py /app/jobs/process.py
+
+ENV SPARK_MASTER_URL=spark://spark-master:7077
+ENV DATA_CSV=/app/data/data.csv
+
+CMD ["spark-submit", "--master", "spark://spark-master:7077", "/app/jobs/process.py"]
