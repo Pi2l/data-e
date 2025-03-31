@@ -9,6 +9,9 @@ services:
     ports:
       - "8080:8080"
       - "127.0.0.1:7077:7077"
+    volumes:
+      - shared_data:/app/data/
+      - shared_out:/app/jobs/out/
 
   spark-worker:
     image: bitnami/spark:latest
@@ -19,12 +22,27 @@ services:
       - SPARK_MASTER_URL=spark://spark-master:7077
     deploy:
       replicas: 2
+    volumes:
+      - shared_data:/app/data/
+      - shared_out:/app/jobs/out/
 
   spark-job:
-    build: .
+    build: 
+      context: .
+      dockerfile: dockerfile
     depends_on:
       - spark-master
     environment:
       - SPARK_MASTER_URL=spark://spark-master:7077
     volumes:
-      - ./out:/app/out
+      - shared_data:/app/data/
+      - shared_out:/app/jobs/out/
+
+volumes:
+  shared_data: {}
+  shared_out:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./out

@@ -45,7 +45,9 @@ def avg_trip_duration_per_gender(df):
 
 if __name__ == "__main__":
     master_url = os.getenv("SPARK_MASTER_URL")
-    data_csv = os.getenv("DATA_CSV")
+    data_csv = os.getenv("DATA_CSV", "/app/data/data.csv")
+    print('data_csv:', data_csv)
+
     spark = SparkSession.builder\
         .appName("process")\
         .master(master_url)\
