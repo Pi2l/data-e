@@ -78,8 +78,8 @@ if __name__ == "__main__":
 
     # Результати виконання записати у вигляді csv файлу в окремому каталозі з відповідною
     # назвою, які в свою чергу помістити у каталог out
-    result1.coalesce(1).write.csv("out/avg_trip_duration", header=True)
-    result2.coalesce(1).write.csv("out/trip_count_per_day", header=True)
-    result3.coalesce(1).write.csv("out/most_popular_start_station", header=True)
-    result4.coalesce(1).write.csv("out/top_3_stations_per_day_last_2_weeks", header=True)
-    result5.coalesce(1).write.csv("out/avg_trip_duration_per_gender", header=True)
+    result1.coalesce(1).write.csv("out/avg_trip_duration", header=True, mode="overwrite")
+    result2.coalesce(1).write.csv("out/trip_count_per_day", header=True, mode="overwrite")
+    result3.coalesce(1).write.csv("out/most_popular_start_station", header=True, mode="overwrite")
+    result4.coalesce(1).write.csv("out/top_3_stations_per_day_last_2_weeks", header=True, mode="overwrite")
+    result5.coalesce(1).write.csv("out/avg_trip_duration_per_gender", header=True, mode="overwrite")
