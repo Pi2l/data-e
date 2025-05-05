@@ -1,0 +1,10 @@
+include:
+  - infra.yaml
+
+#services:
+#  producer:
+#  consumer:
+
+networks:
+  kafka:
+    name: kafka
