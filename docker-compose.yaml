@@ -1,9 +1,16 @@
 include:
   - infra.yaml
 
-#services:
-#  producer:
-#  consumer:
+services:
+  producer:
+    build:
+      context: producer/
+      dockerfile: dockerfile
+    depends_on:
+      - broker-1
+      - broker-2
+    networks:
+      - kafka
 
 networks:
   kafka:
