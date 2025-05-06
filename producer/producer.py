@@ -39,6 +39,6 @@ with open(FILE_PATH, mode='r', encoding='utf-8') as file:
             producer.send(topic, value=row)
         print(f"Sent: {row}")
         time.sleep(1)
-    producer.flush()
+        producer.flush()
 
 producer.close()
