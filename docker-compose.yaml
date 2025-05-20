@@ -1,0 +1,44 @@
+include:
+  - infra.yaml
+
+services:
+  producer:
+    container_name: producer
+    build:
+      context: producer/
+      dockerfile: dockerfile
+    depends_on:
+      - broker-1
+      - broker-2
+    networks:
+      - kafka
+
+  consumer-1:
+    container_name: consumer-1
+    build:
+      context: consumer/
+      dockerfile: dockerfile
+    environment:
+      - TOPIC=Topic1
+    depends_on:
+      - broker-1
+      - broker-2
+    networks:
+      - kafka
+
+  consumer-2:
+    container_name: consumer-2
+    build:
+      context: consumer/
+      dockerfile: dockerfile
+    environment:
+      - TOPIC=Topic2
+    depends_on:
+      - broker-1
+      - broker-2
+    networks:
+      - kafka
+    
+networks:
+  kafka:
+    name: kafka
