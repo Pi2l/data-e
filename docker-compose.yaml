@@ -20,9 +20,13 @@ services:
       dockerfile: dockerfile
     environment:
       - TOPIC=Topic1
+      - MINIO_BUCKET=transportation-bucket-1
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-minioadmin}
     depends_on:
       - broker-1
       - broker-2
+      - minio
     networks:
       - kafka
 
@@ -33,9 +37,13 @@ services:
       dockerfile: dockerfile
     environment:
       - TOPIC=Topic2
+      - MINIO_BUCKET=transportation-bucket-2
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-minioadmin}
     depends_on:
       - broker-1
       - broker-2
+      - minio
     networks:
       - kafka
     

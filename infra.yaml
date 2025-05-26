@@ -60,3 +60,24 @@ services:
       - broker-2
     networks:
       - kafka
+
+  minio:
+    image: bitnami/minio:2025.5.24-debian-12-r1
+    container_name: minio-service
+    command: server /data --console-address ":9001"
+    user: '1000:1000'
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MINIO_DEFAULT_BUCKETS: default
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    volumes:
+      - ./minio_data:/data
+    networks:
+      - kafka
+
+volumes:
+  minio_data:
+    driver: local

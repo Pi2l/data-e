@@ -2,6 +2,8 @@
 # повідомлення/подію яку відправлятиме до Kafka кластер
 # Kafka кластер повинен мати два топіки (Topic1,Topic2), кожне сформоване повідомлення
 # продюсером потрібно публікувати у Topic1 і Topic2
+
+# Продюсер видає повідомлення відсортовані по даті у висхідному порядку
 from kafka import KafkaProducer
 import time
 import csv
@@ -32,7 +34,9 @@ while producer is None:
 ROW_READ_LIMIT = 15
 with open(FILE_PATH, mode='r', encoding='utf-8') as file:
     reader = csv.DictReader(file)
-    for i, row in enumerate(reader):
+    rows = list(reader)
+    rows.sort(key=lambda x: x['start_time'])  # Sort by start_time
+    for i, row in enumerate(rows):
         if i >= ROW_READ_LIMIT:
             break
         for topic in TOPICS:
